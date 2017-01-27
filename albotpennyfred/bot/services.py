@@ -4,6 +4,7 @@ import json
 OPENWEATHERMAP_KEY = '95ebe617b4fcaf0f7a54f388c5bc5816'
 GG_KEY = 'AIzaSyC0UwA4FXJo5KKK_3ullfhn0vHzPWHCeuc'
 
+# TODO: Catch exceptions where functions fail to return proper Json files
 
 def get_weather(city):
     result = {}
@@ -23,8 +24,7 @@ def get_directions(origin, dest):
     params = {'origin': origin, 'destination': dest, 'key': GG_KEY}
     r = requests.get(url, params=params)
     directions = r.json()
-    print(directions)
     result["duration"] = directions["routes"][0]['legs'][0]["duration"]["text"]
-    print(result)
+    return json.dumps(result)
 
-get_directions('48.7669471,2.2811072', 'rue Lhomond')
+# get_directions('48.7669471,2.2811072', 'rue Lhomond')
