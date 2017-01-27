@@ -8,16 +8,9 @@ from .serializers import WeatherSerializer
 from django.conf import settings
 import requests
 from django.http import JsonResponse
+from .services import get_weather
+import json
 
-
-def get_weather(request):
-    if request.method == "GET":
-        r = requests.get('http://api.openweathermap.org/data/2.5/weather?q=Brussels&units=metric&appid='
-                         + settings.OPENWEATHERMAP_KEY)
-        json = r.json()
-        print(json)
-        serializer = WeatherSerializer(data=json)
-        if serializer.is_valid():
-            # weather = serializer.save()
-            print("all good")
-            return JsonResponse(serializer.data)
+def weather(request):
+    stream = json.loads(get_weather("Brussels"))
+    return JsonResponse(stream)
