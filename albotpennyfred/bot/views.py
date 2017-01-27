@@ -11,6 +11,7 @@ from django.http import JsonResponse
 from .services import get_weather
 import json
 
-def weather(request):
-    stream = json.loads(get_weather("Brussels"))
+def weather(request, city):
+    # TODO: Serialize if need be stream in a Weather object
+    stream = json.loads(get_weather(city))
     return JsonResponse(stream)
