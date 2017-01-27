@@ -2,6 +2,7 @@ import requests
 import json
 
 OPENWEATHERMAP_KEY = '95ebe617b4fcaf0f7a54f388c5bc5816'
+GG_KEY = 'AIzaSyC0UwA4FXJo5KKK_3ullfhn0vHzPWHCeuc'
 
 
 def get_weather(city):
@@ -14,3 +15,16 @@ def get_weather(city):
     result["temperature"] = forecast["main"]["temp"]
     result["location"] = forecast["name"]
     return json.dumps(result)
+
+
+def get_directions(origin, dest):
+    result = {}
+    url = 'https://maps.googleapis.com/maps/api/directions/json'
+    params = {'origin': origin, 'destination': dest, 'key': GG_KEY}
+    r = requests.get(url, params=params)
+    directions = r.json()
+    print(directions)
+    result["duration"] = directions["routes"][0]['legs'][0]["duration"]["text"]
+    print(result)
+
+get_directions('48.7669471,2.2811072', 'rue Lhomond')
