@@ -35,25 +35,31 @@ Should you have Alfred running locally on your machine, here is the way to set i
 ### Rest API part
 
 - You should have Python 3 installed on your machine. If need be, install it using a command line
-
 ```bash
 sudo apt-get install python3
 ```
 
 - You also need to have Django, the Django Rest Framework and Tweepy. You may install it using a command line.
 You may have to use a `sudo` and/or make sure you have Python 3 files installed using `pip3` instead of `pip`
-
 ```bash
 pip install django
 pip install djangorestframework
 pip install tweepy
 ```
 
+- To record tweets, you also have to set up your local database (currently in SQLite3):
+
+
 - You can know run Albot Pennyfred locally using these commands.
 You may have to use `python3` instead of `python` if your machine has Python 2 as default
-
+Remember to set up your database (currently in SQLite3) if you haven't done it already:
 ```bash
 cd albotpennyfred
+python manage.py makemigrations
+python manage.py migrate
+```
+Run the server locally:
+```bash
 python manage.py runserver
 ```
 
@@ -72,6 +78,12 @@ python read.py
 ### Read your tweets
 
 Whenever a Twitter user refers to Alfred, the tweet will be read and Alfred will react properly. He may acknowledge other users interactions.
+
+Every tweet seen in the process is recorded in a database (currently in SQLite3) as a Log model with the following attributes:
+- Tweet ID
+- Username of the writer
+- Full content
+- Date and time
 
 ### Help you
 
