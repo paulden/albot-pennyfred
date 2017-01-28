@@ -8,13 +8,11 @@ def analyze(data):
         place = data["place"]
         if "weather" in content:
             return answer_weather(content, username)
-            print("on donne le temps")
         elif "remind" in content:
             # call function to post response later
             pass
         elif "when" in content and "leave" in content:
-            # call function to get directions
-            pass
+            return answer_directions(place, content, username)
         else:
             # return "sry didnt understand lol"
             pass
@@ -35,7 +33,15 @@ def answer_weather(content, username):
     return answer
 
 
-def answer_directions(data, username):
-    return True
-
-
+def answer_directions(place, content, username):
+    # TODO: Parse destination in content to get appropriate time from API
+    answer = "@%s Dear %s, " % username
+    if "name" in place:
+        dest = "Brussels"
+        location = place["name"]  # The location provided by Twitter seems inaccurate (at least in Paris)
+        r = requests.get("http://127.0.0.1:8000/directions/" + location + "/" + dest)
+        duration = r.json()["duration"]
+        answer += "according to Google Maps, the trip will take you %s by car. Please, drive safely." % duration
+    else:
+        answer += "you seem to have disabled the location in your tweets, I cannot help you unfortunately."
+    return answer

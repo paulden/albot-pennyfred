@@ -6,10 +6,10 @@ from react import *
 
 
 # Variables that contains the user credentials to access Twitter API
-access_token = "804056756842332161-EWcJaRS0Cu1TWqzQ9dIVObICTDwnsMH"
-access_token_secret = "eixQsXjTCt2W7dgpBHIf6MhkyegaIUvwyXDzKnTObjzUi"
-consumer_key = "CeUYVK9tVB6bKzZ6lEMYRZXf7"
-consumer_secret = "sfzWreSXVeL38C5tfM4HGONtLOo1h2OW4pUSm800dVdtxtvMLM"
+access_token = "xxx"
+access_token_secret = "xxx"
+consumer_key = "xxx"
+consumer_secret = "xxx"
 
 
 # This is a basic listener that just prints received tweets to stdout.
