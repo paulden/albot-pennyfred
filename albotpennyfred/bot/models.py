@@ -1,8 +1,14 @@
 from django.db import models
 
 
-class Weather(models.Model):
-    date = models.DateField(auto_now_add=True)
-    desc = models.CharField(max_length=40)
-    temp = models.CharField(max_length=10)
-    location = models.CharField(max_length=30)
+class Log(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    username = models.CharField(max_length=60)
+    text = models.CharField(max_length=200)
+    time = models.CharField(max_length=20)
+
+    class Meta:
+        ordering = ('time',)
+
+    def __str__(self):
+        return self.text

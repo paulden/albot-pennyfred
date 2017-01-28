@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Weather
+from .models import Log
 
 
-class WeatherSerializer(serializers.ModelSerializer):
+class LogSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Weather
-        fields = '__all__'
+        model = Log
+        fields = ('id', 'username', 'text', 'time')
