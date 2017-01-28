@@ -1,14 +1,11 @@
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from rest_framework.parsers import JSONParser
 from .services import get_weather, get_directions
 from .serializers import LogSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
-import collections
 
 
 def weather(request, city):

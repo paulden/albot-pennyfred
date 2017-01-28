@@ -29,7 +29,7 @@ def answer_weather(content, username):
     temp = round(weather["temperature"])
     desc = weather["desc"]
     location = weather["location"]
-    answer += "expect a %s in %s today, with about %i°C. Have a good day" % (desc, location, temp)
+    answer += "expect %s in %s today, with about %i°C. Have a good day" % (desc, location, temp)
     return answer
 
 

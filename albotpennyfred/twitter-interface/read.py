@@ -3,6 +3,7 @@ from tweepy import OAuthHandler, Stream, API, TweepError
 import requests
 import json
 from react import *
+from record import *
 
 
 # Variables that contains the user credentials to access Twitter API
@@ -19,7 +20,11 @@ class StdOutListener(StreamListener):
         print(data)
         formatted_data = json.loads(data)
         if "text" in formatted_data:
-            if formatted_data["user"]["screen_name"] != "il_m0nco":
+            try:
+                record(formatted_data)
+            except ConnectionError:
+                print("ConnectionError: failed to establish a connection")
+            if formatted_data["user"]["screen_name"] != "xxx":
                 try:
                     tweet_id = formatted_data["id"]
                     api.update_status(analyze(formatted_data), tweet_id)
@@ -41,4 +46,3 @@ if __name__ == "__main__":
     api = API(auth)
 
     stream.userstream()
-    print("Streaming de data en cours...")
