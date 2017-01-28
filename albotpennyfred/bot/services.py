@@ -6,6 +6,7 @@ GG_KEY = 'AIzaSyC0UwA4FXJo5KKK_3ullfhn0vHzPWHCeuc'
 
 # TODO: Catch exceptions where functions fail to return proper Json files
 
+
 def get_weather(city):
     result = {}
     url = 'http://api.openweathermap.org/data/2.5/weather'
