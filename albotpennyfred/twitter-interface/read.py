@@ -1,10 +1,8 @@
 from tweepy.streaming import StreamListener
-from tweepy import OAuthHandler
-from tweepy import Stream
-from tweepy import API
+from tweepy import OAuthHandler, Stream, API, TweepError
 import requests
 import json
-from .react import *
+from react import *
 
 
 # Variables that contains the user credentials to access Twitter API
@@ -20,14 +18,13 @@ class StdOutListener(StreamListener):
     def on_data(self, data):
         print(data)
         formatted_data = json.loads(data)
-        try:
-            if "weather" in formatted_data["text"]:
-                r = requests.get("http://127.0.0.1:8000/weather/brussels")
-                response = r.json()
-                print(response)
-                api.update_status(response["desc"])
-        except (TypeError, KeyError) as e:
-            print("Error on_data: %s" % str(e))
+        if "text" in formatted_data:
+            if formatted_data["user"]["screen_name"] != "il_m0nco":
+                try:
+                    tweet_id = formatted_data["id"]
+                    api.update_status(analyze(formatted_data), tweet_id)
+                except (TweepError, KeyError) as e:
+                    print("Error on_data: %s" % str(e))
         return True
 
     def on_error(self, status):
