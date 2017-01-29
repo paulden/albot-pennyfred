@@ -1,4 +1,5 @@
 import requests
+import time
 
 
 def analyze(data):
@@ -45,3 +46,16 @@ def answer_directions(place, content, username):
     else:
         answer += "you seem to have disabled the location in your tweets, I cannot help you unfortunately."
     return answer
+
+
+def answer_reminder(content, username):
+    # TODO: Parse time and eventually tasks to get appropriate response from API
+    answer = "@%s Dear %s, " % username
+
+
+def time_to_timestamp(datetime):
+    """
+    Converts a datetime formatted as 2017/01/31 16:00 in a timestamp 1485702900.0
+    to use it in Buffer (reminder task)
+    """
+    return time.mktime(time.strptime(datetime, '%Y/%m/%d %H:%M'))
