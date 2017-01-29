@@ -9,11 +9,17 @@ import json
 
 
 def weather(request, city):
+    """
+    Retrieves the current weather in a city calling OpenWeatherMap
+    """
     data = json.loads(get_weather(city))
     return JsonResponse(data)
 
 
 def directions(request, origin, dest):
+    """
+    Retrieves the duration of a trip calling Google Directions
+    """
     data = json.loads(get_directions(origin, dest))
     return JsonResponse(data)
 

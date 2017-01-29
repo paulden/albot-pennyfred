@@ -98,9 +98,9 @@ As a butler, Alfred will try to help you in these simple matters:
 These information are not recorded in database since they are deemed as not useful on the long-run.
 The location is parsed in the tweet content using Geotext which returns the name of a city.
 
-TODO in this part:
+**Possible improvements in this part:**
 - Manage exception if city is not found
-- Forecast ?
+- User may ask for forecast?
 
 #### Remind you of your tasks
 
@@ -114,9 +114,8 @@ Another way to implement a reminder could be to record them in the API database 
 For instance, we would have a GET request every 15 minutes to check if there are upcoming task to remind and, if so, remind user of this.
 This approach was deemed less flexible and secure than using Buffer, hence the current implementation
 
-TODO in this part:
-- Parse task in content of the message
-- Parse time in content of the message
+**Possible improvements in this part:**
+- Improve parsing of message (currently using datefinder which is not optimal)
 
 #### Help you when you plan to move
 
@@ -124,7 +123,7 @@ TODO in this part:
 These information are not recorded in database since they are deemed as not useful on the long-run.
 The location is parsed in the tweet content using Geotext which returns the name of a city.
 
-TODO in this part:
+**Possible improvements in this part:**
 - Manage exception if city not found
 - Find a way around the inaccurate position given by Twitter (IF there is one)
 - Offer options (driving, walking, cycling, public transportation)
@@ -132,10 +131,12 @@ TODO in this part:
 ## Possible improvements
 
 This Twitter bot still requires some work. Here are the possible improvements currently considered:
-- Improve security by designing a specific private Keys class which would contain API keys and tokens
-- Improve security by restricting access to POST requests
-- Improve parsing when reading tweets to react in a better way (manage typos, synonyms, etc.). NLTK library seems useful in such case.
+- Improve security by designing a specific private Keys class which would contain API keys and tokens and restricting access to POST requests
+- Improve parsing when reading tweets to react in a better way (manage typos, synonyms, etc.).
+    - NLTK library seems a good way to start.
+    - Wit.ai also provides way to understand the sense of a phrase and would be a powerful tool if it can be used.
 - Manage exceptions when services are down
+- Increase the variety of his replies by completing a file with numerous lines that would be called randomly (see phrases.txt).
 
 Some smaller improvements are also written inline in the code.
 
