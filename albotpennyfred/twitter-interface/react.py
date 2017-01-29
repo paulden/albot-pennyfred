@@ -31,11 +31,14 @@ def analyze(data):
 def answer_weather(city, username):
     answer = "@%s Dear %s, " % username
     r = requests.get("http://127.0.0.1:8000/weather/" + city)
-    weather = r.json()
-    temp = round(weather["temperature"])
-    desc = weather["desc"]
-    location = weather["location"]
-    answer += "expect %s in %s today, with about %i°C. Have a good day" % (desc, location, temp)
+    if r.status_code in [200, 201]:
+        weather = r.json()
+        temp = round(weather["temperature"])
+        desc = weather["desc"]
+        location = weather["location"]
+        answer += "expect %s in %s today, with about %i°C. Have a good day" % (desc, location, temp)
+    else:
+        answer += "I am sorry, I cannot reach someone to get the weather currently."
     return answer
 
 
@@ -45,8 +48,11 @@ def answer_directions(place, city, username):
         dest = city
         location = place["name"]  # The location provided by Twitter seems inaccurate (at least in Paris)
         r = requests.get("http://127.0.0.1:8000/directions/" + location + "/" + dest)
-        duration = r.json()["duration"]
-        answer += "according to Google Maps, the trip will take you %s by car. Please, drive safely." % duration
+        if r.status_code in [200, 201]:
+            duration = r.json()["duration"]
+            answer += "according to Google Maps, the trip will take you %s by car. Please, drive safely." % duration
+        else:
+            answer += "I am sorry, I cannot reach someone to get the time needed currently."
     else:
         answer += "you seem to have disabled the location in your tweets, I cannot help you unfortunately."
     return answer
@@ -85,7 +91,6 @@ def parse_time(content):
     """
     matches = datefinder.find_dates(content)
     l = list(matches)
-    print(l)
     date = str(l[0])
     return date[:-3]
 
