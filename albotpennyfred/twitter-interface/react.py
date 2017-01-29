@@ -1,6 +1,7 @@
 import requests
 import time
 from geotext import GeoText
+import datefinder
 from keys import *
 
 
@@ -13,7 +14,8 @@ def analyze(data):
             city = GeoText(content).cities[0]
             return answer_weather(city, username)
         elif "remind" in content:
-            return answer_reminder(data["id"], content, username)
+            datetime = parse_time(content)
+            return answer_reminder(data["id"], datetime, username)
         elif "how long" in content:
             city = GeoText(content).cities[0]
             return answer_directions(place, city, username)
@@ -49,13 +51,12 @@ def answer_directions(place, city, username):
     return answer
 
 
-def answer_reminder(tweet_id, content, username):
-    # TODO: Parse time and eventually tasks to get appropriate response from API
+def answer_reminder(tweet_id, datetime, username):
+    # TODO: Generate appropriate response by parsing tasks
     answer = "@%s Very well, %s, " % username
-    time = "14:50"
-    formatted_time = "2017/01/29 14:50"
-    timestamp = time_to_timestamp(formatted_time)
-    task = "clean the house"
+    time = datetime[11:]
+    timestamp = time_to_timestamp(datetime)
+    task = "take out the trash"
     answer += "I will not fail to remind you to %s at %s" % (task, time)
     reminder = "@%s Dear %s," % username
     reminder += "don't forget to %s, it is now high time you take care of such business!" % task
@@ -76,4 +77,13 @@ def time_to_timestamp(datetime):
     Converts a datetime formatted as 2017/01/31 16:00 in a timestamp 1485702900.0
     to use it in Buffer (reminder task)
     """
-    return time.mktime(time.strptime(datetime, '%Y/%m/%d %H:%M'))
+    return time.mktime(time.strptime(datetime, '%Y-%m-%d %H:%M'))
+
+
+def parse_time(content):
+    matches = datefinder.find_dates(content)
+    for match in matches:
+        if match != "":
+            date = str(match)
+            break
+    return date[:-3]

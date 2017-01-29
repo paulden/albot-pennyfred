@@ -39,12 +39,14 @@ Should you have Alfred running locally on your machine, here is the way to set i
 sudo apt-get install python3
 ```
 
-- You also need to have Django, the Django Rest Framework and Tweepy. You may install it using a command line.
+- You also need to have Django, the Django Rest Framework, Tweepy, Datefinder Geotext. You may install it using a command line.
 You may have to use a `sudo` and/or make sure you have Python 3 files installed using `pip3` instead of `pip`
 ```bash
 pip install django
 pip install djangorestframework
 pip install tweepy
+pip install geotext
+pip install datefinder
 ```
 
 - To record tweets, you also have to set up your local database (currently in SQLite3):
@@ -94,9 +96,10 @@ As a butler, Alfred will try to help you in these simple matters:
 - Upon receiving a tweet directed @albot_pennyfred and containing the word weather, a reply containing the location, the temperature and a description of the weather will be submitted
 - To get this information, the Rest API part uses OpenWeatherMap API to provide required information.
 These information are not recorded in database since they are deemed as not useful on the long-run.
+The location is parsed in the tweet content using Geotext which returns the name of a city.
 
 TODO in this part:
-- Parse location in content of the message
+- Manage exception if city is not found
 - Forecast ?
 
 #### Remind you of your tasks
@@ -119,9 +122,10 @@ TODO in this part:
 
 - To get this information, the Rest API part uses Google Directions to provide required information.
 These information are not recorded in database since they are deemed as not useful on the long-run.
+The location is parsed in the tweet content using Geotext which returns the name of a city.
 
 TODO in this part:
-- Parse location of destination
+- Manage exception if city not found
 - Find a way around the inaccurate position given by Twitter (IF there is one)
 - Offer options (driving, walking, cycling, public transportation)
 
@@ -144,6 +148,8 @@ Some smaller improvements are also written inline in the code.
 - Buffer API: https://buffer.com/developers/api
 - Tweepy documentation: http://docs.tweepy.org/en/v3.5.0/index.html
 - Tweepy example ("Introduction to text mining using Twitter"): http://adilmoujahid.com/posts/2014/07/twitter-analytics/
+- Geotext page: https://pypi.python.org/pypi/geotext
+- Datefinder page: https://github.com/akoumjian/datefinder
 
 ## Contact
 
