@@ -17,14 +17,14 @@ The streaming API is consumed using Tweepy which makes it easy to stream incomin
 
 ### Important
 
-You have to get your own API keys to use this program (OpenWeatherMap, Google API and Twitter API).
+You have to get your own API keys to use this program (OpenWeatherMap, Google API, Buffer API and Twitter API).
 
 The keys you may find in this repository (if there are some) are private and should be treated as such.
 
 ## Run it locally
 
 Currently, the project is divided in two main parts:
-- The Rest API part, developed with Django, which is here to feed information and (TODO) record logs
+- The Rest API part, developed with Django, which is here to feed information and record logs
 - The Twitter interface, developed using Tweepy, which is here to stream Twitter feed and post status when needed
 
 This architecture was made out of flexibility to allow easy iterations on this (very) initial work.
@@ -101,7 +101,19 @@ TODO in this part:
 
 #### Remind you of your tasks
 
-This part will be implemented later on.
+- Upon receiving a tweet direct @albot_pennyfred containing the word remind, a reply will acknowledge (if successful) the creation of a reminder.
+- To remind a user of a task, the Rest API part uses Buffer API to post a tweet scheduled for a certain datetime.
+Buffer is a platform where users can link their social media accounts and schedule posts.
+This implementation allows a greater flexibility and security (for instance, if a problem occurs when running the streaming script, the scheduled tweet still exists since it has been posted on Buffer)
+The reminder is also recorded in database as a way to track them.
+
+Another way to implement a reminder could be to record them in the API database and regularly check for task to remind.
+For instance, we would have a GET request every 15 minutes to check if there are upcoming task to remind and, if so, remind user of this.
+This approach was deemed less flexible and secure than using Buffer, hence the current implementation
+
+TODO in this part:
+- Parse task in content of the message
+- Parse time in content of the message
 
 #### Help you when you plan to move
 
@@ -113,12 +125,23 @@ TODO in this part:
 - Find a way around the inaccurate position given by Twitter (IF there is one)
 - Offer options (driving, walking, cycling, public transportation)
 
+## Possible improvements
+
+This Twitter bot still requires some work. Here are the possible improvements currently considered:
+- Improve security by designing a specific private Keys class which would contain API keys and tokens
+- Improve security by restricting access to POST requests
+- Improve parsing when reading tweets to react in a better way (manage typos, synonyms, etc.). NLTK library seems useful in such case.
+- Manage exceptions when services are down
+
+Some smaller improvements are also written inline in the code.
+
 ## Useful links
 
 - Django Rest Framework tutorial: http://www.django-rest-framework.org/#tutorial
 - OpenWeatherMap API: https://openweathermap.org/api
 - Google Directions API: https://developers.google.com/maps/documentation/directions/
 - Twitter Streaming API: https://dev.twitter.com/streaming/userstreams
+- Buffer API: https://buffer.com/developers/api
 - Tweepy documentation: http://docs.tweepy.org/en/v3.5.0/index.html
 - Tweepy example ("Introduction to text mining using Twitter"): http://adilmoujahid.com/posts/2014/07/twitter-analytics/
 
