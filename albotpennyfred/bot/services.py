@@ -1,13 +1,11 @@
 import requests
 import json
 
-access_token_buffer = "xxx"
+access_token_buffer = "ENTER YOUR ACCESS TOKEN FROM BUFFER HERE"
+
 # Variables that contain other API keys
-openweathermap_key = "xx"
-googleapi_key = "xxx"
-
-
-# TODO: Catch exceptions where functions fail to return proper Json files
+openweathermap_key = "ENTER YOUR OPENWEATHERMAP API KEY HERE"
+googleapi_key = "ENTER YOUR GOOGLE API KEY HERE"
 
 
 def get_weather(city):

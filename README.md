@@ -19,7 +19,7 @@ The streaming API is consumed using Tweepy which makes it easy to stream incomin
 
 You have to get your own API keys to use this program (OpenWeatherMap, Google API, Buffer API and Twitter API).
 
-You also need to enter your Twitter credentials to use the Twitter Streaming API. Fill the keys.py files. 
+You also need to enter your Twitter credentials to use the Twitter Streaming API. Fill the keys.py file and service.py as well to have full functionalities. 
 For more information on how to find such credentials, go on https://apps.twitter.com/.
 
 ## General architecture
