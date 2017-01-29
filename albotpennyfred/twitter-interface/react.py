@@ -3,6 +3,7 @@ import time
 from geotext import GeoText
 import datefinder
 from keys import *
+from bonus import answer_else
 
 
 def analyze(data):
@@ -21,8 +22,11 @@ def analyze(data):
             city = GeoText(content).cities[0]
             return answer_directions(place, city, username)
         else:
-            # return "sry didnt understand lol"
-            pass
+            if answer_else(content):
+                answer = "@" + username[0] + " " + answer_else(content)
+                return answer
+            else:
+                return False
     except (TypeError, KeyError) as e:
         print("Error on_data: %s" % str(e))
         pass

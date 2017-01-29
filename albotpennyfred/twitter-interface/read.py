@@ -6,7 +6,7 @@ from record import record
 from keys import *
 
 
-# This is a basic listener that react appropriately when reading streamed tweets
+# This is a basic listener that reacts appropriately when reading streamed tweets
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
@@ -18,7 +18,8 @@ class StdOutListener(StreamListener):
                 try:
                     tweet_id = formatted_data["id"]
                     response = analyze(formatted_data)
-                    api.update_status(response, tweet_id)  # TODO: Do not update status if there's nothing to say
+                    if response:
+                        api.update_status(response, tweet_id)
                 except (TweepError, KeyError) as e:
                     print("Error on_data: %s" % str(e))
         return True
