@@ -1,16 +1,9 @@
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler, Stream, API, TweepError
-import requests
 import json
 from react import *
 from record import record
-
-
-# Variables that contains the user credentials to access Twitter API
-access_token = "xxx"
-access_token_secret = "xxx"
-consumer_key = "xxx"
-consumer_secret = "xxx"
+from keys import *
 
 
 # This is a basic listener that react appropriately when reading streamed tweets
@@ -21,7 +14,7 @@ class StdOutListener(StreamListener):
         formatted_data = json.loads(data)
         if "text" in formatted_data:
             record(formatted_data)
-            if formatted_data["user"]["screen_name"] != "il_m0nco":
+            if formatted_data["user"]["screen_name"] != twitter_username:
                 try:
                     tweet_id = formatted_data["id"]
                     response = analyze(formatted_data)
