@@ -36,13 +36,11 @@ def post_reminder(buffer_id, text, time):
     params = {'text': text, 'profile_ids': buffer_id, 'scheduled_at': time, 'access_token': "1/7c5c80fb96e52c22ea1147076f63f819"}
     r = requests.post(url, params)
     result = r.json()
-    print(result)
     if "success" in result:
-        if result["success"] == "true":
-            return True
+        return result["success"]
 
 
-post_reminder("588dac6e01a953bf15457145", "on retest", "1485702900.0")
+# post_reminder("588dac6e01a953bf15457145", "on retest", "1485702900.0")
 
 # client_id = "588dae8dba8b5fa269457144"
 # redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
