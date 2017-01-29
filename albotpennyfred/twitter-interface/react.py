@@ -15,7 +15,8 @@ def analyze(data):
             return answer_weather(city, username)
         elif "remind" in content:
             datetime = parse_time(content)
-            return answer_reminder(data["id"], datetime, username)
+            task = parse_task(content)
+            return answer_reminder(data["id"], datetime, task, username)
         elif "how long" in content:
             city = GeoText(content).cities[0]
             return answer_directions(place, city, username)
@@ -51,13 +52,11 @@ def answer_directions(place, city, username):
     return answer
 
 
-def answer_reminder(tweet_id, datetime, username):
-    # TODO: Generate appropriate response by parsing tasks
+def answer_reminder(tweet_id, datetime, task, username):
     answer = "@%s Very well, %s, " % username
-    time = datetime[11:]
+    time_in_tweet = datetime[11:]
     timestamp = time_to_timestamp(datetime)
-    task = "take out the trash"
-    answer += "I will not fail to remind you to %s at %s" % (task, time)
+    answer += "I will not fail to remind you to %s at %s" % (task, time_in_tweet)
     reminder = "@%s Dear %s," % username
     reminder += "don't forget to %s, it is now high time you take care of such business!" % task
     try:
@@ -81,9 +80,25 @@ def time_to_timestamp(datetime):
 
 
 def parse_time(content):
+    """
+    Tries to parse the time in the text to plan a tweet
+    """
     matches = datefinder.find_dates(content)
-    for match in matches:
-        if match != "":
-            date = str(match)
-            break
+    l = list(matches)
+    print(l)
+    date = str(l[0])
     return date[:-3]
+
+
+def parse_task(content):
+    """
+    Tries to parse the task in the text to reply a tweet appropriate
+    This requires some improvements
+    """
+    matches = list(datefinder.find_dates(content, index=True))
+    end_index = matches[0][1][0]
+    start_index = content.find("emind me to")
+    if start_index >= 0:
+        return content[start_index+12:end_index]
+    else:
+        return "that"

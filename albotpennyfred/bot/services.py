@@ -37,6 +37,5 @@ def post_reminder(buffer_id, text, time):
     params = {'text': text, 'profile_ids': buffer_id, 'scheduled_at': time, 'access_token': access_token_buffer}
     r = requests.post(url, params)
     result = r.json()
-    print(result)
     if "success" in result:
         return result["success"]
