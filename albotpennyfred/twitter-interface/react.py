@@ -2,6 +2,9 @@ import requests
 import time
 
 
+CLIENT_ID = "xxx"
+
+
 def analyze(data):
     try:
         content = data["text"]
@@ -10,8 +13,7 @@ def analyze(data):
         if "weather" in content:
             return answer_weather(content, username)
         elif "remind" in content:
-            # call function to post response later
-            pass
+            return answer_reminder(data["id"], content, username)
         elif "when" in content and "leave" in content:
             return answer_directions(place, content, username)
         else:
@@ -48,9 +50,26 @@ def answer_directions(place, content, username):
     return answer
 
 
-def answer_reminder(content, username):
+def answer_reminder(tweet_id, content, username):
     # TODO: Parse time and eventually tasks to get appropriate response from API
-    answer = "@%s Dear %s, " % username
+    answer = "@%s Very well, %s, " % username
+    time = "4pm"
+    formatted_time = "2017/01/31 16:00"
+    timestamp = time_to_timestamp(formatted_time)
+    task = "clean the house"
+    answer += "I will not fail to remind you to %s at %s" % (task, time)
+    reminder = "@%s Dear %s," % username
+    reminder += "don't forget to %s, it is now high time you take care of such business!" % task
+    try:
+        plan = {"id": tweet_id, "username": username[0], "text": reminder,
+                "plan_time": str(timestamp), "client_id": CLIENT_ID}
+        r = requests.post("http://127.0.0.1:8000/plan_tweet/", plan)
+        if r.status_code == 201:
+            return answer
+        else:
+            return "@%s Sorry %s, I could not make a note of that and I deeply apologized."
+    except ConnectionError:
+        print("ConnectionError: failed to establish a connection")
 
 
 def time_to_timestamp(datetime):

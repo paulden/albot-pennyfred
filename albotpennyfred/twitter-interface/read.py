@@ -3,7 +3,7 @@ from tweepy import OAuthHandler, Stream, API, TweepError
 import requests
 import json
 from react import *
-from record import *
+from record import record
 
 
 # Variables that contains the user credentials to access Twitter API
@@ -13,21 +13,19 @@ consumer_key = "xxx"
 consumer_secret = "xxx"
 
 
-# This is a basic listener that just prints received tweets to stdout.
+# This is a basic listener that react appropriately when reading streamed tweets
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
         print(data)
         formatted_data = json.loads(data)
         if "text" in formatted_data:
-            try:
-                record(formatted_data)
-            except ConnectionError:
-                print("ConnectionError: failed to establish a connection")
-            if formatted_data["user"]["screen_name"] != "xxx":
+            record(formatted_data)
+            if formatted_data["user"]["screen_name"] != "il_m0nco":
                 try:
                     tweet_id = formatted_data["id"]
-                    api.update_status(analyze(formatted_data), tweet_id)
+                    response = analyze(formatted_data)
+                    api.update_status(response, tweet_id)  # TODO: Do not update status if there's nothing to say
                 except (TweepError, KeyError) as e:
                     print("Error on_data: %s" % str(e))
         return True
