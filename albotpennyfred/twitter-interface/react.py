@@ -40,7 +40,7 @@ def answer_weather(city, username):
         temp = round(weather["temperature"])
         desc = weather["desc"]
         location = weather["location"]
-        answer += "expect %s in %s today, with about %i°C. Have a good day" % (desc, location, temp)
+        answer += "expect %s in %s today, with about %i°C. Have a good day." % (desc, location, temp)
     else:
         answer += "I am sorry, I cannot reach someone to get the weather currently."
     return answer
@@ -68,7 +68,7 @@ def answer_reminder(tweet_id, datetime, task, username):
     timestamp = time_to_timestamp(datetime)
     answer += "I will not fail to remind you to %s at %s" % (task, time_in_tweet)
     reminder = "@%s Dear %s," % username
-    reminder += "don't forget to %s, it is now high time you take care of such business!" % task
+    reminder += " don't forget to %s, it is now high time you take care of such business!" % task
     try:
         plan = {"id": tweet_id, "username": username[0], "text": reminder,
                 "plan_time": str(timestamp), "client_id": client_id}
