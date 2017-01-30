@@ -14,11 +14,11 @@ def analyze(data):
         if "weather" in content:
             city = GeoText(content).cities[0]
             return answer_weather(city, username)
-        elif "remind" in content:
+        elif "remind" in content or "Remind" in content:
             datetime = parse_time(content)
             task = parse_task(content)
             return answer_reminder(data["id"], datetime, task, username)
-        elif "how long" in content:
+        elif "how long" in content or "How long" in content:
             city = GeoText(content).cities[0]
             return answer_directions(place, city, username)
         else:

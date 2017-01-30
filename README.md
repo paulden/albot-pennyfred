@@ -142,6 +142,15 @@ The location is parsed in the tweet content using Geotext which returns the name
 - Find a way around the inaccurate position given by Twitter (IF there is one)
 - Offer options (driving, walking, cycling, public transportation)
 
+### Keywords
+
+Keywords detected | Reaction
+--- | ---
+weather | Tells the current weather of the city quoted in the tweet
+remind | Parses task and time and plans a tweet to remind a task
+how long | Gives the time needed to drive to the city quoted in the tweet (from the location of the tweet)
+thanks, joke, batman, wayne | Replies something related
+
 ## Possible improvements
 
 This Twitter bot still requires some work. Here are the possible improvements currently considered:
@@ -160,6 +169,8 @@ It's very easy to add new answers but tedious to find and write nice phrases tri
     - Challenge you with questions of general knowledge (there may be a database of such questions on the Internet)
     - Suggest random playlists according to your musical taste (with Spotify API)
     - etc.
+
+If you were to deploy the bot, don't forget to change API calls in `twitter-interface` (currently written down as localhost `127.0.0.1`).
 
 ## Useful links
 
